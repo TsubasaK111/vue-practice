@@ -1,5 +1,7 @@
 <template>
-  <div/>
+  <div>
+    <button @click="$emit('gohome')" >home</button>
+  </div>
 </template>
 
 <script>
