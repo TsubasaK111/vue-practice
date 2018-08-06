@@ -1,23 +1,17 @@
 <template>
   <div id="app">
     <h1>{{ title }}</h1>
-    <navbar @gohome="gohome" />
-    <all_photos :photos="photos"/>
-    <single_photo />
+    <navbar @gohome="gohome" @uploaded="uploaded($event)" />
+    <all_photos :photos="photos" v-if="currentView==='AllPhotos'" @selectPhoto="selectPhoto($event)"/>
+    <single_photo v-else :selectedPhoto="selectedPhoto"/>
   </div>
 </template>
 
 <script>
+import { saveObject, listObjects } from "../utils";
 import Navbar from "./Navbar";
 import AllPhotos from "./AllPhotos";
 import SinglePhoto from "./SinglePhoto";
-
-const mockPhoto = {
-  url: "https://images.gr-assets.com/books/1175087974l/476454.jpg",
-  name: "whats michael drowning",
-  alt: "its michael",
-  photoKey: "michael1",
-};
 
 export default {
   name: "App",
@@ -28,7 +22,7 @@ export default {
   },
   data: () => ({
     title: "Photo Upload App",
-    photos: [mockPhoto],
+    photos: [],
     currentView: "AllPhotos",
     selectedPhoto: null,
   }),
@@ -37,10 +31,27 @@ export default {
       console.log("AllPhotos!");
       this.currentView = "AllPhotos";
     },
+    uploaded: function(event) {
+      const file = event.target.files[0];
+      saveObject(file).then((result) => {
+        console.log(result);
+        return {};
+      });
+    },
+    selectPhoto: function(event) {
+      this.currentView = "SinglePhoto";
+      this.selectedPhoto = event.target.src;
+    },
   },
-  // created(){
-  //   this.
-  // }
+  created() {
+    listObjects()
+      .then((results) => {
+        return results.map(
+          (image) => "http://react.sprint.s3.amazonaws.com/" + image.Key
+        );
+      })
+      .then((results) => (this.photos = results));
+  },
 };
 </script>
 

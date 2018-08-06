@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div v-for="photo in photos" :key="photoKey">
-      <img :src="photo.url" />
-    </div>
+    <span v-for="photo in photos" :key="photo">
+      <img class="photo" :src="photo" @click="$emit('selectPhoto', $event)"/>
+    </span>
   </div>
 </template>
 
@@ -14,4 +14,8 @@ export default {
 </script>
 
 <style>
+.photo {
+  width: 100px;
+  height: 100px;
+}
 </style>
