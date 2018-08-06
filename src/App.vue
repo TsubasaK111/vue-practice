@@ -35,7 +35,7 @@ export default {
       const file = event.target.files[0];
       saveObject(file).then((result) => {
         console.log(result);
-        return {};
+        //TODO force list objects to run
       });
     },
     selectPhoto: function(event) {

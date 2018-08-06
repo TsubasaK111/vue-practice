@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img :src="selectedPhoto" />
+    <img class="selectedPhoto" :src="selectedPhoto" />
   </div>
 </template>
 
@@ -12,4 +12,8 @@ export default {
 </script>
 
 <style>
+.selectedPhoto {
+  width: 100%;
+  height: auto;
+}
 </style>
