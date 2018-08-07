@@ -1,9 +1,16 @@
 <template>
   <div id="app">
-    <h1>{{ title }}</h1>
-    <navbar @gohome="gohome" @uploaded="uploaded($event)" />
-    <all_photos id="allPhotos" :photos="photos" v-if="currentView==='AllPhotos'" @selectPhoto="selectPhoto($event)"/>
-    <single_photo v-else :selectedPhoto="selectedPhoto"/>
+    <h1>{{ $store.state.title }}</h1>
+    <navbar
+      @gohome="$store.commit('gohome')"
+      @uploaded="uploaded($event)"
+    />
+    <all_photos id="allPhotos"
+      :photos="photos"
+      v-if="$store.state.currentView==='AllPhotos'"
+      @selectPhoto="selectPhoto($event)"
+    />
+    <single_photo v-else :selectedPhoto="$store.state.selectedPhoto"/>
   </div>
 </template>
 
@@ -21,15 +28,9 @@ export default {
     single_photo: SinglePhoto,
   },
   data: () => ({
-    title: "Photoize Me, Captain!",
     photos: [],
-    currentView: "AllPhotos",
-    selectedPhoto: null,
   }),
   methods: {
-    gohome: function() {
-      this.currentView = "AllPhotos";
-    },
     uploaded: function(event) {
       const file = event.target.files[0];
       saveObject(file).then((result) => {
@@ -37,8 +38,7 @@ export default {
       });
     },
     selectPhoto: function(event) {
-      this.currentView = "SinglePhoto";
-      this.selectedPhoto = event.target.src;
+      this.$store.commit("singlePhoto", event.target.src);
     },
   },
   created() {
