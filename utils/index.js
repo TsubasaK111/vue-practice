@@ -1,4 +1,5 @@
 /* global AWS */
+const AWS = require("aws-sdk");
 const bucketName = "react.sprint";
 const identityPoolId = "ap-northeast-1:131db146-e5b9-4f7b-8b58-d0c59e2deeaf";
 
@@ -17,7 +18,6 @@ const bucket = new AWS.S3({
 });
 
 export function listObjects() {
-  console.log("listing objects");
   const listObjects = new Promise((resolve) => {
     bucket.listObjects((error, data) => {
       if (error) {

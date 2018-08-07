@@ -12,11 +12,6 @@ export default {
   components: {
     upload: Upload,
   },
-  methods: {
-    consule: function(e) {
-      console.log(e);
-    },
-  },
 };
 </script>
 

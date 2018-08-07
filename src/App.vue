@@ -2,7 +2,7 @@
   <div id="app">
     <h1>{{ title }}</h1>
     <navbar @gohome="gohome" @uploaded="uploaded($event)" />
-    <all_photos :photos="photos" v-if="currentView==='AllPhotos'" @selectPhoto="selectPhoto($event)"/>
+    <all_photos id="allPhotos" :photos="photos" v-if="currentView==='AllPhotos'" @selectPhoto="selectPhoto($event)"/>
     <single_photo v-else :selectedPhoto="selectedPhoto"/>
   </div>
 </template>
@@ -21,20 +21,18 @@ export default {
     single_photo: SinglePhoto,
   },
   data: () => ({
-    title: "Photo Upload App",
+    title: "Photoize Me, Captain!",
     photos: [],
     currentView: "AllPhotos",
     selectedPhoto: null,
   }),
   methods: {
     gohome: function() {
-      console.log("AllPhotos!");
       this.currentView = "AllPhotos";
     },
     uploaded: function(event) {
       const file = event.target.files[0];
       saveObject(file).then((result) => {
-        console.log(result);
         //TODO force list objects to run
       });
     },

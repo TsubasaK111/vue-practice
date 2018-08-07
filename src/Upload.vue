@@ -1,7 +1,7 @@
 <template>
   <div>
-    <input id="file" type="file" @change="$emit('uploaded', $event)"/>
-    <button @click="$emit('uploaded')" >Upload!</button>
+    <input id="file" ref="uploadInput" type="file" @change="$emit('uploaded', $event)"/>
+    <button @click="$refs.uploadInput.click()" >Upload!</button>
   </div>
 </template>
 
